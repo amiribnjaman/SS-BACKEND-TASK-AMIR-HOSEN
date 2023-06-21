@@ -1,12 +1,18 @@
 const express = require('express')
 const cors = require('cors')
 const app = express()
+require('./config/db')
+
 
 // App Middlewares
 app.use(cors())
 app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
 
+// Testing get route
+app.get('/', (req, res) => {
+    res.status(200).sendFile(__dirname + ('/view/index.html'))
+})
 
 // Handling url error
 app.use((req, res, next) => {
@@ -22,10 +28,5 @@ app.use((error, req, res, next) => {
     })
 })
 
-
-// Testing get route
-app.get('/', (req, res) => {
-    res.status(200).sendFile(__dirname + ('/view/index.html'))
-})
 
 module.exports = app
