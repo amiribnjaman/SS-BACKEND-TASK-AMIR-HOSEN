@@ -1,8 +1,9 @@
 const express = require('express')
 const cors = require('cors')
 const app = express()
-require('./config/db')
+require('./config/db.connection')
 const moviesRouter = require('./route/movies.router')
+const showRouter = require('./route/shows.router')
 
 
 // App Middlewares
@@ -11,8 +12,9 @@ app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
 
 
-// Application Api endpoint
+// Movies Api endpoint
 app.use('/api/movies', moviesRouter)
+app.use('/api/show', showRouter)
 
 
 // Testing get route

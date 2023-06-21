@@ -1,9 +1,8 @@
-const Movies = require('../model/movies.module')
-const Crew = require('../model/crew.module')
-const { v4: uuidv4 } = require('uuid');
+const Movies = require('../model/moviesModel/movies.model')
+const Crew = require('../model/moviesModel/crew.model')
 
 
-// Get all movies endpoint
+// API endpoint to get all movies 
 const getAllMovies = async (req, res) => {
     try {
         const movies = await Movies.find()
@@ -34,23 +33,22 @@ const findASingleMoveiWithCrewDetials = async (req, res) => {
     }
 }
 
-// Post a movie endpoint
+// API endpoint TO post a movie 
 const createMovie = async (req, res) => {
     try {
-        console.log(req.body)
         const createNewMovie = new Movies({
-            id: uuidv4(),
             movieName: req.body.movieName,
             region: req.body.region,
         })
+        const newMovie = await createNewMovie.save()
 
         // Movie director and others crew details post in Crew collection
-        const newMovie = await createNewMovie.save()
         const creatCrewDetails = new Crew({
-            movieId: newMovie.id,
+            movieId: newMovie._id,
             director: req.body.director
         })
         await creatCrewDetails.save()
+
         res.status(201).json({ msg: 'A movie created successfully' })
 
     } catch (error) {
