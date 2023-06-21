@@ -1,11 +1,20 @@
 const mongoose = require('mongoose')
 
 const crewSchema = new mongoose.Schema({
-    id: {
+    movieId: {
         type: String,
-        require: true,
+        required: true,
     },
-    directionTeam: {
+    director: {
+        type: String,
+        required: true
+    }
+})
+
+
+/***
+ * 
+ *  directionTeam: {
         director: {
             type: String,
             require: true
@@ -33,7 +42,5 @@ const crewSchema = new mongoose.Schema({
             require: false
         }
     },
-
-})
-
+ */
 module.exports = mongoose.model('Crew', crewSchema)
