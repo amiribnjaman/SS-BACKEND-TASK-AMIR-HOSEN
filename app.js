@@ -2,12 +2,18 @@ const express = require('express')
 const cors = require('cors')
 const app = express()
 require('./config/db')
+const moviesRouter = require('./route/movies.router')
 
 
 // App Middlewares
 app.use(cors())
 app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
+
+
+// Application Api endpoint
+app.use('/api/movies', moviesRouter)
+
 
 // Testing get route
 app.get('/', (req, res) => {
@@ -24,7 +30,7 @@ app.use((req, res, next) => {
 // Handling server error
 app.use((error, req, res, next) => {
     res.status(500).json({
-        message: "Internal problem occur"
+        message: "Internal problem occurred"
     })
 })
 
