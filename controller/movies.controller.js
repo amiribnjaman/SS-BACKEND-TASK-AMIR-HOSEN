@@ -2,9 +2,36 @@ const Movies = require('../model/movies.module')
 const Crew = require('../model/crew.module')
 const { v4: uuidv4 } = require('uuid');
 
-// Get all movies endpoin
-const getAllMovies = (req, res) => {
-    res.status(200).json({ data: 'get all movies' })
+
+// Get all movies endpoint
+const getAllMovies = async (req, res) => {
+    try {
+        const movies = await Movies.find()
+        res.status(200).send(movies)
+    } catch (error) {
+        console.log(error.message)
+    }
+}
+
+// Get all crews endpoint
+// const getAllcrews = async (req, res) => {
+//     try {
+//         const crews = await Crews.find()
+//         res.status(200).send(crews)
+//     } catch (error) {
+//         console.log(error.message)
+//     }
+// }
+
+// Find a single movie via id with crewDetails
+const findASingleMoveiWithCrewDetials = async (req, res) => {
+    try {
+        const id = req.params.id
+        const movie = await Movies.findOne({ id: id })
+        res.status(200).send(movie)
+    } catch (error) {
+
+    }
 }
 
 // Post a movie endpoint
@@ -31,4 +58,6 @@ const createMovie = async (req, res) => {
     }
 }
 
-module.exports = { getAllMovies, createMovie } 
+
+
+module.exports = { getAllMovies, createMovie, findASingleMoveiWithCrewDetials } 
