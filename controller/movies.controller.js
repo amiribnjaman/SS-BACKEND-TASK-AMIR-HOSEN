@@ -1,33 +1,39 @@
 const Movies = require('../model/moviesModel/movies.model')
-const Crew = require('../model/moviesModel/crew.model')
+const Directors = require('../model/moviesModel/directors.model')
+const starring = require('../model/moviesModel/starring.model')
+const { v4: uuidv4 } = require('uuid')
 
 
 // API endpoint to get all movies 
 const getAllMovies = async (req, res) => {
     try {
-        const movies = await Movies.find()
+        const movies = await Movies.aggregate([{
+            $lookup: {
+                from: 'Directors',
+                localField: '_id',
+                foreignField: 'movieId',
+                as: 'directors'
+            },
+            $lookup: {
+                from: 'starring',
+                localField: '_id',
+                foreignField: 'movieId',
+                as: 'starring'
+            }
+        }]
+        )
         res.status(200).send(movies)
     } catch (error) {
         console.log(error.message)
     }
 }
 
-// Get all crews endpoint
-// const getAllcrews = async (req, res) => {
-//     try {
-//         const crews = await Crews.find()
-//         res.status(200).send(crews)
-//     } catch (error) {
-//         console.log(error.message)
-//     }
-// }
-
 // Find a single movie via id with crewDetails
 const findASingleMoveiWithCrewDetials = async (req, res) => {
     try {
         const id = req.params.id
-        const movie = await Movies.findOne({ id: id })
-        res.status(200).send(movie)
+
+        // res.status(200).send(movies)
     } catch (error) {
 
     }
@@ -36,18 +42,28 @@ const findASingleMoveiWithCrewDetials = async (req, res) => {
 // API endpoint TO post a movie 
 const createMovie = async (req, res) => {
     try {
+        const id = uuidv4()
         const createNewMovie = new Movies({
+            id,
             movieName: req.body.movieName,
             region: req.body.region,
         })
-        const newMovie = await createNewMovie.save()
 
-        // Movie director and others crew details post in Crew collection
-        const creatCrewDetails = new Crew({
-            movieId: newMovie._id,
+        // Movie director and others crew details post in director collection
+        const creatDirectorsDetails = new Directors({
+            movieId: id,
             director: req.body.director
         })
-        await creatCrewDetails.save()
+
+        // Movie Starring/actors details post in starring collection
+        const creatStarringDetails = new starring({
+            movieId: id,
+            director: req.body.director
+        })
+
+        await createNewMovie.save()
+        await creatDirectorsDetails.save()
+        await creatStarringDetails.save()
 
         res.status(201).json({ msg: 'A movie created successfully' })
 
