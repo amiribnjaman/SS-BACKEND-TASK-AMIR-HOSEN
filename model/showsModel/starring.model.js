@@ -2,7 +2,7 @@ const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
 
-const movieStarringSchema = new Schema({
+const showStarringSchema = new Schema({
     movieId: { type: String },
     actor: {
         type: String
@@ -26,4 +26,4 @@ const movieStarringSchema = new Schema({
 
 
 
-module.exports = mongoose.model('MovieStarring', movieStarringSchema)
+module.exports = mongoose.model('ShowStarring', showStarringSchema)

@@ -2,7 +2,7 @@ const mongoose = require('mongoose')
 const { Schema } = mongoose
 
 
-const showsSchema = new Schema({
+const showSchema = new Schema({
     id: {
         type: String
     },
@@ -19,4 +19,4 @@ const showsSchema = new Schema({
 })
 
 
-module.exports = mongoose.model('Shows', showsSchema)
+module.exports = mongoose.model('Shows', showSchema)

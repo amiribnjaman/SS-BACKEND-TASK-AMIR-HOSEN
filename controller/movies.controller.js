@@ -1,6 +1,6 @@
 const Movies = require('../model/moviesModel/movies.model')
-const Directors = require('../model/moviesModel/directors.model')
-const Starring = require('../model/moviesModel/starring.model')
+const MovieDirectors = require('../model/moviesModel/directors.model')
+const MovieStarring = require('../model/moviesModel/starring.model')
 // const mongoose = require('mongoose')
 
 const { v4: uuidv4 } = require('uuid')
@@ -22,8 +22,8 @@ const findASingleMoveiWithCrewDetials = async (req, res) => {
         let movieFullInfo = []
         const id = req.params.id
         const movie = await Movies.findOne({ id: id })
-        const movieDiretor = await Directors.findOne({ movieId: movie.id })
-        const movieStarring = await Starring.findOne({ movieId: movie.id })
+        const movieDiretor = await MovieDirectors.findOne({ movieId: movie.id })
+        const movieStarring = await MovieStarring.findOne({ movieId: movie.id })
         movieFullInfo.push(movie, movieDiretor, movieStarring)
 
         res.status(200).send(movieFullInfo)
@@ -37,6 +37,7 @@ const createMovie = async (req, res) => {
     try {
 
         const id = uuidv4()
+        // A new movie creating api end point
         const createNewMovie = new Movies({
             id,
             movieName: req.body.movieName,
@@ -44,13 +45,13 @@ const createMovie = async (req, res) => {
         })
 
         // Movie director and others crew details post in director collection
-        const creatDirectorsDetails = new Directors({
+        const creatDirectorsDetails = new MovieDirectors({
             movieId: id,
             director: req.body.director
         })
 
         // Movie Starring/actors details post in starring collection
-        const creatStarringDetails = new Starring({
+        const creatStarringDetails = new MovieStarring({
             movieId: id,
             actor: req.body.actor
         })
@@ -59,7 +60,7 @@ const createMovie = async (req, res) => {
         await creatDirectorsDetails.save()
         await creatStarringDetails.save()
 
-        res.status(201).json({ msg: 'A movie created successfully' })
+        res.status(201).json({ msg: 'A new movie created successfully' })
 
     } catch (error) {
         res.status(500).send(error.message)
