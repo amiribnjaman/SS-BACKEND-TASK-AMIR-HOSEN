@@ -1,27 +1,15 @@
 const Movies = require('../model/moviesModel/movies.model')
 const Directors = require('../model/moviesModel/directors.model')
-const starring = require('../model/moviesModel/starring.model')
+const Starring = require('../model/moviesModel/starring.model')
+const mongoose = require('mongoose')
+
 const { v4: uuidv4 } = require('uuid')
 
 
 // API endpoint to get all movies 
 const getAllMovies = async (req, res) => {
     try {
-        const movies = await Movies.aggregate([{
-            $lookup: {
-                from: 'Directors',
-                localField: '_id',
-                foreignField: 'movieId',
-                as: 'directors'
-            },
-            $lookup: {
-                from: 'starring',
-                localField: '_id',
-                foreignField: 'movieId',
-                as: 'starring'
-            }
-        }]
-        )
+        const movies = await Movies.find({})
         res.status(200).send(movies)
     } catch (error) {
         console.log(error.message)
@@ -31,17 +19,23 @@ const getAllMovies = async (req, res) => {
 // Find a single movie via id with crewDetails
 const findASingleMoveiWithCrewDetials = async (req, res) => {
     try {
+
         const id = req.params.id
-
-        // res.status(200).send(movies)
+        let movie = await Movies.findOne({ id: id })
+        const movieDiretor = await Directors.findOne({ movieId: movie.id })
+        const movieStarring = await Starring.findOne({ id: movie.id })
+        movie += movieDiretor + movieStarring
+        res.status(200).send(movie)
     } catch (error) {
-
+        console.log(error.message)
     }
 }
 
 // API endpoint TO post a movie 
 const createMovie = async (req, res) => {
     try {
+        console.log(req.body)
+
         const id = uuidv4()
         const createNewMovie = new Movies({
             id,
@@ -56,9 +50,9 @@ const createMovie = async (req, res) => {
         })
 
         // Movie Starring/actors details post in starring collection
-        const creatStarringDetails = new starring({
+        const creatStarringDetails = new Starring({
             movieId: id,
-            director: req.body.director
+            actor: req.body.actor
         })
 
         await createNewMovie.save()

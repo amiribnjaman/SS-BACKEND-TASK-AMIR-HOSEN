@@ -3,9 +3,9 @@ const Schema = mongoose.Schema
 
 
 const starringSchema = new Schema({
-    movieId: {
-        type: String,
-        required: true,
+    movieId: { type: String },
+    actor: {
+        type: String
     },
     // starring: {
     //     hero: {
@@ -21,8 +21,9 @@ const starringSchema = new Schema({
     //         require: false
     //     }
     // },
+
 })
 
 
 
-module.exports = mongoose.model('starring', starringSchema)
+module.exports = mongoose.model('Starring', starringSchema)

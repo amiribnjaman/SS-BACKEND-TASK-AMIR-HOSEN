@@ -1,43 +1,22 @@
 const mongoose = require('mongoose')
-const Schema = mongoose.Schema
+const { Schema } = mongoose
+const { v4: uuidv4 } = require('uuid')
+
 
 const movieSchema = new Schema({
+    // id: uuidv4(),
     id: {
-        type: String,
-        required: true,
+        type: String
     },
     movieName: {
         type: String,
-        required: [true, 'Movei field is required']
-    },
-    countries: {
-        type: String,
-        required: [true, 'region field is required']
-    },
-    runtime: {
-        type: String,
-        required: [true, 'Run time field is required']
-    },
-    releasedDate: {
-        type: String,
-        required: [true, 'Realsed date is required']
-    },
-    languages: {
-        type: [],
-        required: false
-    },
-    budget: {
-        type: Number,
-        required: [true, 'Budget is required']
-    },
-    boxOffice: {
-        type: Number,
-        required: false
+        required: [true, 'Movie field is required']
     },
     createdAt: {
         type: Date,
         default: Date.now
-    }
+    },
+    // directors: [uuidv4(), { ref: 'Directors' }]
 
 })
 

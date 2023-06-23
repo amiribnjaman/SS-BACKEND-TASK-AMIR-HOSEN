@@ -1,12 +1,17 @@
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema
+const { v4: uuidv4 } = require('uuid')
+
 
 
 const directorSchema = new Schema({
+    // movieId: [uuidv4(), { ref: 'Movies' }],
     movieId: {
-        type: String,
-        required: true,
+        type: String
     },
+    director: {
+        type: String
+    }
     // directorPanel: {
     //     director: {
     //         type: String,
@@ -29,6 +34,7 @@ const directorSchema = new Schema({
     //         required: false
     //     },
     // }
+
 })
 
 
