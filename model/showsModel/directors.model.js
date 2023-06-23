@@ -3,7 +3,7 @@ const Schema = mongoose.Schema
 
 
 const showDirectorSchema = new Schema({
-    movieId: {
+    showId: {
         type: String
     },
     director: {

@@ -12,7 +12,7 @@ const getAllMovies = async (req, res) => {
         const movies = await Movies.find({})
         res.status(200).send(movies)
     } catch (error) {
-        console.log(error.message)
+        res.status(500).send(error.message)
     }
 }
 
@@ -56,6 +56,7 @@ const createMovie = async (req, res) => {
             actor: req.body.actor
         })
 
+        // Save all info into collections through schema
         await createNewMovie.save()
         await creatDirectorsDetails.save()
         await creatStarringDetails.save()

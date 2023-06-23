@@ -1,6 +1,6 @@
 const Shows = require('../model/showsModel/shows.model')
-const showDirector = require('../model/showsModel/directors.model')
-const showStarring = require('../model/showsModel/starring.model')
+const ShowDirectors = require('../model/showsModel/directors.model')
+const ShowStarrings = require('../model/showsModel/starring.model')
 const { v4: uuidv4 } = require('uuid')
 
 
@@ -10,10 +10,10 @@ const getAllShows = async (req, res) => {
         const shows = await Shows.find({})
         res.status(200).send(shows)
     } catch (error) {
-        console.log(error.message)
+        res.status(500).send(error.message)
     }
 }
-// API endpoint TO post a show 
+// API endpoint to post a show 
 const createShow = async (req, res) => {
     try {
         const id = uuidv4()
@@ -25,18 +25,18 @@ const createShow = async (req, res) => {
         })
 
         // Show director and others crew details post in director collection
-        const creatDirectorsDetails = new showDirector({
-            movieId: id,
+        const creatDirectorsDetails = new ShowDirectors({
+            showId: id,
             director: req.body.director
         })
 
         // Show Starring/actors details post in starring collection
-        const creatStarringDetails = new showStarring({
-            movieId: id,
+        const creatStarringDetails = new ShowStarrings({
+            showId: id,
             actor: req.body.actor
         })
 
-
+        // Save all info into collections through schema
         await createNewShow.save()
         await creatDirectorsDetails.save()
         await creatStarringDetails.save()
@@ -48,6 +48,23 @@ const createShow = async (req, res) => {
     }
 }
 
+// Find a single show via id with crewDetails
+const findASingleShowWithOtherCrew = async (req, res) => {
+    try {
+        let showFullInfo = []
+        const id = req.params.id
+        const show = await Shows.findOne({ id: id })
+        const showDirector = await ShowDirectors.findOne({ showId: show.id })
+        const showStarring = await ShowStarrings.findOne({ showId: show.id })
+
+        // Full all info into show full info array
+        showFullInfo.push(show, showDirector, showStarring)
+
+        res.status(200).send(showFullInfo)
+    } catch (error) {
+        res.status(500).send(error.message)
+    }
+}
 
 
-module.exports = { getAllShows, createShow } 
+module.exports = { getAllShows, createShow, findASingleShowWithOtherCrew } 
