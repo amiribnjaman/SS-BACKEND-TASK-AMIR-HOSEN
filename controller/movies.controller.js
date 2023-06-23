@@ -19,13 +19,14 @@ const getAllMovies = async (req, res) => {
 // Find a single movie via id with crewDetails
 const findASingleMoveiWithCrewDetials = async (req, res) => {
     try {
-
+        let movieFullInfo = []
         const id = req.params.id
-        let movie = await Movies.findOne({ id: id })
+        const movie = await Movies.findOne({ id: id })
         const movieDiretor = await Directors.findOne({ movieId: movie.id })
-        const movieStarring = await Starring.findOne({ id: movie.id })
-        movie += movieDiretor + movieStarring
-        res.status(200).send(movie)
+        const movieStarring = await Starring.findOne({ movieId: movie.id })
+        movieFullInfo.push(movie, movieDiretor, movieStarring)
+
+        res.status(200).send(movieFullInfo)
     } catch (error) {
         console.log(error.message)
     }
@@ -34,7 +35,6 @@ const findASingleMoveiWithCrewDetials = async (req, res) => {
 // API endpoint TO post a movie 
 const createMovie = async (req, res) => {
     try {
-        console.log(req.body)
 
         const id = uuidv4()
         const createNewMovie = new Movies({
