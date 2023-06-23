@@ -2,7 +2,15 @@ const Shows = require('../model/showsModel/shows.model')
 const { v4: uuidv4 } = require('uuid')
 
 
-
+// API endpoint to get all shows 
+const getAllShows = async (req, res) => {
+    try {
+        const shows = await Shows.find({})
+        res.status(200).send(shows)
+    } catch (error) {
+        console.log(error.message)
+    }
+}
 // API endpoint TO post a show 
 const createShow = async (req, res) => {
     try {
@@ -23,4 +31,4 @@ const createShow = async (req, res) => {
 
 
 
-module.exports = { createShow } 
+module.exports = { getAllShows, createShow } 

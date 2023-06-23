@@ -1,8 +1,9 @@
 const express = require('express')
 const router = express.Router()
 
-const {  createShow } = require('../controller/shows.controller')
+const { getAllShows, createShow } = require('../controller/shows.controller')
 
-router.use('/', createShow)
+router.get('/', getAllShows)
+router.post('/', createShow)
 
 module.exports = router
