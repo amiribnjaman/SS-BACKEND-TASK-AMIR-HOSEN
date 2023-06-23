@@ -53,12 +53,14 @@ const findASingleShowWithOtherCrew = async (req, res) => {
     try {
         let showFullInfo = []
         const id = req.params.id
+
+        // Find data from shows, showDirectors and showStarrings collections
         const show = await Shows.findOne({ id: id }, { _id: 0, createdAt: 0, __v: 0 })
         const showDirector = await ShowDirectors.findOne({ showId: show.id }, { _id: 0, __v: 0 })
         const showStarring = await ShowStarrings.findOne({ showId: show.id }, { _id: 0, __v: 0 })
 
-        // Full all info into show full info array
-        showFullInfo.push({'show': show}, {'director': showDirector}, {'starring': showStarring})
+        // Fush all shows info into showFullInfo array
+        showFullInfo.push({ 'show': show }, { 'director': showDirector }, { 'starring': showStarring })
 
         res.status(200).send(showFullInfo)
     } catch (error) {
