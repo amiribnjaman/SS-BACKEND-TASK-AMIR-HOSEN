@@ -1,7 +1,7 @@
 const Movies = require('../model/moviesModel/movies.model')
 const Directors = require('../model/moviesModel/directors.model')
 const Starring = require('../model/moviesModel/starring.model')
-const mongoose = require('mongoose')
+// const mongoose = require('mongoose')
 
 const { v4: uuidv4 } = require('uuid')
 

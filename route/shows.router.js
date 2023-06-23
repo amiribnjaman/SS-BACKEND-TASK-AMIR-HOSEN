@@ -1,8 +1,8 @@
 const express = require('express')
 const router = express.Router()
 
-// const {  getAllShows } = require('../controller/shows.controller')
+const {  createShow } = require('../controller/shows.controller')
 
-// router.use('/', getAllShows)
+router.use('/', createShow)
 
 module.exports = router

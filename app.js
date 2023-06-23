@@ -3,7 +3,7 @@ const cors = require('cors')
 const app = express()
 require('./config/db.connection')
 const moviesRouter = require('./route/movies.router')
-const showRouter = require('./route/shows.router')
+const showsRouter = require('./route/shows.router')
 
 
 // App Middlewares
@@ -14,7 +14,8 @@ app.use(express.json())
 
 // Movies Api endpoint
 app.use('/api/movies', moviesRouter)
-app.use('/api/show', showRouter)
+// Shows Api endpoint
+app.use('/api/shows', showsRouter)
 
 
 // Testing get route
