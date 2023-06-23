@@ -21,9 +21,9 @@ const findASingleMoveiWithCrewDetials = async (req, res) => {
     try {
         let movieFullInfo = []
         const id = req.params.id
-        const movie = await Movies.findOne({ id: id })
-        const movieDiretor = await MovieDirectors.findOne({ movieId: movie.id })
-        const movieStarring = await MovieStarring.findOne({ movieId: movie.id })
+        const movie = await Movies.findOne({ id: id }, { _id: 0, createdAt: 0, __v: 0 })
+        const movieDiretor = await MovieDirectors.findOne({ movieId: movie.id }, { _id: 0, __v: 0 })
+        const movieStarring = await MovieStarring.findOne({ movieId: movie.id }, { _id: 0, __v: 0 })
         movieFullInfo.push(movie, movieDiretor, movieStarring)
 
         res.status(200).send(movieFullInfo)

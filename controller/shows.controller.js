@@ -53,9 +53,9 @@ const findASingleShowWithOtherCrew = async (req, res) => {
     try {
         let showFullInfo = []
         const id = req.params.id
-        const show = await Shows.findOne({ id: id })
-        const showDirector = await ShowDirectors.findOne({ showId: show.id })
-        const showStarring = await ShowStarrings.findOne({ showId: show.id })
+        const show = await Shows.findOne({ id: id }, { _id: 0, createdAt: 0, __v: 0 })
+        const showDirector = await ShowDirectors.findOne({ showId: show.id }, { _id: 0, __v: 0 })
+        const showStarring = await ShowStarrings.findOne({ showId: show.id }, { _id: 0, __v: 0 })
 
         // Full all info into show full info array
         showFullInfo.push(show, showDirector, showStarring)
