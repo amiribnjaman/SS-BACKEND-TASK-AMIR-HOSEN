@@ -7,7 +7,7 @@ const { v4: uuidv4 } = require('uuid')
 // API endpoint to get all shows 
 const getAllShows = async (req, res) => {
     try {
-        const shows = await Shows.find({})
+        const shows = await Shows.find({}, { _id: 0, createdAt: 0, __v: 0 })
         res.status(200).send(shows)
     } catch (error) {
         res.status(500).send(error.message)
@@ -58,7 +58,7 @@ const findASingleShowWithOtherCrew = async (req, res) => {
         const showStarring = await ShowStarrings.findOne({ showId: show.id }, { _id: 0, __v: 0 })
 
         // Full all info into show full info array
-        showFullInfo.push(show, showDirector, showStarring)
+        showFullInfo.push({'show': show}, {'director': showDirector}, {'starring': showStarring})
 
         res.status(200).send(showFullInfo)
     } catch (error) {
