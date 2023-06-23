@@ -18,7 +18,7 @@ app.use('/api/movies', moviesRouter)
 // Shows Api endpoint
 app.use('/api/shows', showsRouter)
 // Api endpoint for user
-app.use('/api/user', userRouter)
+app.use('/api/users', userRouter)
 
 
 // Testing get route
