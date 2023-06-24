@@ -11,7 +11,7 @@ const showSchema = new Schema({
         required: [true, 'Show field is required']
     },
     runtime: {
-        type: string
+        type: String
     },
     createdAt: {
         type: Date,

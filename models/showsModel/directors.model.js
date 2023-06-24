@@ -10,7 +10,7 @@ const showDirectorSchema = new Schema({
         type: String,
     },
     writer:  {
-        type: string
+        type: String
     }
 
 })

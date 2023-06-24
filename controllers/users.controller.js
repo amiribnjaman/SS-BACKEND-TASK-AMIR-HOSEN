@@ -1,5 +1,5 @@
-const Users = require('../model/usersModel/user.model')
-const Role = require('../model/usersModel/role.model')
+const Users = require('../models/usersModel/user.model')
+const Role = require('../models/usersModel/role.model')
 const { v4: uuidv4 } = require('uuid')
 const md5 = require('md5')
 
@@ -14,38 +14,36 @@ const getAllUser = async (req, res) => {
 }
 
 // get a user with role using id
-const getSingleUserWithRole = async (req, res) => {
-    try {
-        const id = req.params.id
-        const userRole = []
-        const user = await Users.findOne({ id: id })
-        const role = await Role.findOne({ userId: id })
-        userRole.push(user, role)
-        res.status(200).send(userRole)
-    } catch (error) {
-        res.status(500).send(error.message)
-    }
-}
+// const getSingleUserWithRole = async (req, res) => {
+//     try {
+//         const id = req.params.id
+//         // const userRole = []
+//         const user = await Users.findOne({ id: id })
+//         // const role = await Role.findOne({ userId: id })
+//         userRole.push(user, role)
+//         res.status(200).send(userRole)
+//     } catch (error) {
+//         res.status(500).send(error.message)
+//     }
+// }
 
 // Api for create a new user
 const createUser = async (req, res) => {
     try {
+        console.log(req.res.locals.token)
         const { name, email, password } = req.body
         const id = uuidv4()
         const user = new Users({
             id,
             name,
             email,
-            password: md5(password)
-        })
-        const role = new Role({
-            userId: id,
+            password: md5(password),
             role: 'user'
         })
 
-        await user.save()
-        await role.save()
-        res.status(201).send({ msg: 'A new user created successfully' })
+
+        // await user.save()
+        // res.status(201).send({ msg: 'A new user created successfully' })
     } catch (error) {
         res.status(500).send(error.message)
     }
@@ -67,11 +65,11 @@ const signInUser = async (req, res) => {
     }
 }
 
-// Update user's role user to admin
+// Update user's role from normal user to admin
 const updateUserRole = async (req, res) => {
     try {
         const id = req.params.id
-        const updatedRole = Users.findOneAndUpdate({ userId: id }, { role: 'admin' }, {
+        const updatedRole = Users.findOneAndUpdate({ id: id }, { role: 'admin' }, {
             new: true
         })
         res.status(204).send(updatedRole)
@@ -81,4 +79,4 @@ const updateUserRole = async (req, res) => {
 }
 
 
-module.exports = { getAllUser, getSingleUserWithRole, createUser, signInUser, updateUserRole } 
+module.exports = { getAllUser, createUser, signInUser, updateUserRole } 

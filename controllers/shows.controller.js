@@ -1,6 +1,6 @@
-const Shows = require('../model/showsModel/shows.model')
-const ShowDirectors = require('../model/showsModel/directors.model')
-const ShowStarrings = require('../model/showsModel/starring.model')
+const Shows = require('../models/showsModel/shows.model')
+const ShowDirectors = require('../models/showsModel/directors.model')
+const ShowStarrings = require('../models/showsModel/starring.model')
 const { v4: uuidv4 } = require('uuid')
 
 

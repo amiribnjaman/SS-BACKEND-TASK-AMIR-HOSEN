@@ -7,6 +7,7 @@ const showsRouter = require('./routes/shows.router')
 const userRouter = require('./routes/users.router')
 
 
+
 // App Middlewares
 app.use(cors())
 app.use(express.urlencoded({ extended: true }))
