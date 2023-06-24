@@ -10,11 +10,13 @@ const showSchema = new Schema({
         type: String,
         required: [true, 'Show field is required']
     },
+    runtime: {
+        type: string
+    },
     createdAt: {
         type: Date,
         default: Date.now
-    },
-    // directors: [uuidv4(), { ref: 'Directors' }]
+    }
 
 })
 

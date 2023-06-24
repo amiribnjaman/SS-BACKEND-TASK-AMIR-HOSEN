@@ -3,7 +3,7 @@ const router = express.Router()
 const {
     getAllMovies,
     createMovie,
-    findASingleMoveiWithCrewDetials } = require('../controller/movies.controller')
+    findASingleMoveiWithCrewDetials } = require('../controllers/movies.controller')
 
 router.get('/', getAllMovies)
 router.post('/', createMovie)

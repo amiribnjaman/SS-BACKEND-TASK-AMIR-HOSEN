@@ -2,15 +2,16 @@ const express = require('express')
 const cors = require('cors')
 const app = express()
 require('./config/db.connection')
-const moviesRouter = require('./route/movies.router')
-const showsRouter = require('./route/shows.router')
-const userRouter = require('./route/users.router')
+const moviesRouter = require('./routes/movies.router')
+const showsRouter = require('./routes/shows.router')
+const userRouter = require('./routes/users.router')
 
 
 // App Middlewares
 app.use(cors())
 app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
+
 
 
 // Movies Api endpoint
@@ -20,10 +21,9 @@ app.use('/api/shows', showsRouter)
 // Api endpoint for user
 app.use('/api/users', userRouter)
 
-
 // Testing get route
 app.get('/', (req, res) => {
-    res.status(200).sendFile(__dirname + ('/view/index.html'))
+    res.status(200).sendFile(__dirname + ('/views/index.html'))
 })
 
 // Handling url error
