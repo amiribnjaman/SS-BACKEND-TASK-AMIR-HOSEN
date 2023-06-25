@@ -4,9 +4,11 @@ const {
     getAllMovies,
     createMovie,
     findASingleMoveiWithCrewDetials } = require('../controllers/movies.controller')
+const { verifyToken } = require('../authentication/jwt/createToken')
+
 
 router.get('/', getAllMovies)
-router.post('/', createMovie)
+router.post('/', verifyToken, createMovie)
 router.get('/:id', findASingleMoveiWithCrewDetials)
 
 

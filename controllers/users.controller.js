@@ -1,7 +1,7 @@
 const Users = require('../models/usersModel/user.model')
-const Role = require('../models/usersModel/role.model')
 const { v4: uuidv4 } = require('uuid')
 const md5 = require('md5')
+
 
 // Get all the users
 const getAllUser = async (req, res) => {
@@ -30,7 +30,8 @@ const getAllUser = async (req, res) => {
 // Api for create a new user
 const createUser = async (req, res) => {
     try {
-        console.log(req.res.locals.token)
+        const token = req.res.locals.token
+        // console.log(token)
         const { name, email, password } = req.body
         const id = uuidv4()
         const user = new Users({
@@ -38,12 +39,15 @@ const createUser = async (req, res) => {
             name,
             email,
             password: md5(password),
-            role: 'user'
+            role: 'user',
+            token
         })
 
+        // Set cookie
+        res.cookie("token", token, { httpOnly: false })
 
-        // await user.save()
-        // res.status(201).send({ msg: 'A new user created successfully' })
+        await user.save()
+        res.status(201).json({ msg: 'A new user created successfully', token: token })
     } catch (error) {
         res.status(500).send(error.message)
     }
@@ -68,11 +72,17 @@ const signInUser = async (req, res) => {
 // Update user's role from normal user to admin
 const updateUserRole = async (req, res) => {
     try {
-        const id = req.params.id
-        const updatedRole = Users.findOneAndUpdate({ id: id }, { role: 'admin' }, {
-            new: true
-        })
-        res.status(204).send(updatedRole)
+        const reqEmail = ''
+        const findEmail = Users.findOne({ email: email })
+        if (findEmail.role == 'admin') {
+            const id = req.params.id
+            const updatedRole = Users.findOneAndUpdate({ id: id }, { role: 'admin' }, {
+                new: true
+            })
+            res.status(204).send(updatedRole)
+        } else {
+            res.status(400).json({ msg: 'User not authorized' })
+        }
     } catch (error) {
         res.status(500).send(error.message)
     }

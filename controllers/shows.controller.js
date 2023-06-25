@@ -1,6 +1,7 @@
 const Shows = require('../models/showsModel/shows.model')
 const ShowDirectors = require('../models/showsModel/directors.model')
 const ShowStarrings = require('../models/showsModel/starring.model')
+const Users = require('../models/usersModel/user.model')
 const { v4: uuidv4 } = require('uuid')
 
 
@@ -17,31 +18,44 @@ const getAllShows = async (req, res) => {
 const createShow = async (req, res) => {
     try {
         const id = uuidv4()
-        // Api end point for create a new show
-        const createNewShow = new Shows({
-            id,
-            showName: req.body.showName,
-            region: req.body.region,
-        })
+        const { showName, runtime, director, writer, hero, heroine } = req.body
 
-        // Show director and others crew details post in director collection
-        const creatDirectorsDetails = new ShowDirectors({
-            showId: id,
-            director: req.body.director
-        })
 
-        // Show Starring/actors details post in starring collection
-        const creatStarringDetails = new ShowStarrings({
-            showId: id,
-            actor: req.body.actor
-        })
+        const reqEmail = ''
+        const findEmail = Users.findOne({ email: email })
 
-        // Save all info into collections through schema
-        await createNewShow.save()
-        await creatDirectorsDetails.save()
-        await creatStarringDetails.save()
+        if (findEmail.role == admin) {
+            // Api end point for create a new show
+            const createNewShow = new Shows({
+                id,
+                showName,
+                runtime
+            })
 
-        res.status(201).json({ msg: 'A new show created successfully' })
+            // Show director and others crew details post in director collection
+            const creatDirectorsDetails = new ShowDirectors({
+                showId: id,
+                director,
+                writer
+            })
+
+            // Show Starring/actors details post in starring collection
+            const creatStarringDetails = new ShowStarrings({
+                showId: id,
+                host,
+                guest
+
+            })
+
+            // Save all info into collections through schema
+            await createNewShow.save()
+            await creatDirectorsDetails.save()
+            await creatStarringDetails.save()
+
+            res.status(201).json({ msg: 'A new show created successfully' })
+        } else {
+            res.status(400).json({ msg: 'User not authorized' })
+        }
 
     } catch (error) {
         res.status(500).send(error.message)

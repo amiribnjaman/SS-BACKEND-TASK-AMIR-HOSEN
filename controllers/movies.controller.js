@@ -1,7 +1,7 @@
 const Movies = require('../models/moviesModel/movies.model')
 const MovieDirectors = require('../models/moviesModel/directors.model')
 const MovieStarring = require('../models/moviesModel/starring.model')
-// const mongoose = require('mongoose')
+const Users = require('../models/usersModel/user.model')
 
 const { v4: uuidv4 } = require('uuid')
 
@@ -39,32 +39,44 @@ const createMovie = async (req, res) => {
     try {
 
         const id = uuidv4()
-        const { movieName, region } = req.body
-        // A new movie creating api end point
-        const createNewMovie = new Movies({
-            id,
-            movieName,
-            region
-        })
+        const { movieName, runtime, director, producer, writer, hero, heroine } = req.body
 
-        // Movie director and others crew details post in director collection
-        const creatDirectorsDetails = new MovieDirectors({
-            movieId: id,
-            director: req.body.director
-        })
+        const reqEmail = ''
+        const findEmail = Users.findOne({ email: email })
+        if (findEmail.role == 'admin') {
+            // A new movie creating api end point
+            const createNewMovie = new Movies({
+                id,
+                movieName,
+                runtime
+            })
 
-        // Movie Starring/actors details post in starring collection
-        const creatStarringDetails = new MovieStarring({
-            movieId: id,
-            actor: req.body.actor
-        })
+            // Movie director and others crew details post in director collection
+            const creatDirectorsDetails = new MovieDirectors({
+                movieId: id,
+                director,
+                producer,
+                writer
 
-        // Save all info into collections through schema
-        await createNewMovie.save()
-        await creatDirectorsDetails.save()
-        await creatStarringDetails.save()
+            })
 
-        res.status(201).json({ msg: 'A new movie created successfully' })
+            // Movie Starring/actors details post in starring collection
+            const creatStarringDetails = new MovieStarring({
+                movieId: id,
+                hero,
+                heroine,
+            })
+
+            // Save all info into collections through schema
+            await createNewMovie.save()
+            await creatDirectorsDetails.save()
+            await creatStarringDetails.save()
+
+            res.status(201).json({ msg: 'A new movie created successfully' })
+        } else {
+            res.status(400).json({ msg: 'User not authorized' })
+        }
+
 
     } catch (error) {
         res.status(500).send(error.message)

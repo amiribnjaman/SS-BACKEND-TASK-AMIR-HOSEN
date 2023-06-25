@@ -4,9 +4,6 @@ const Schema = mongoose.Schema
 
 const showStarringSchema = new Schema({
     showId: { type: String },
-    actor: {
-        type: String
-    },
     host: {
         type: String,
     },
