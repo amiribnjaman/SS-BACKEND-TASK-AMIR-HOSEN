@@ -20,8 +20,8 @@ const getAllMovies = async (req, res) => {
 const findASingleMoveiWithCrewDetials = async (req, res) => {
     try {
         let movieFullInfo = []
-        const id = req?.params?.id
-        console.log(req.params, id)
+        const id = req.params?.id
+        // console.log(req.params, id)
 
         // Find data from movies, moviesdirectors and movieStarring collections
         const movie = await Movies.findOne({ id: id }, { _id: 0, createdAt: 0, __v: 0 })
