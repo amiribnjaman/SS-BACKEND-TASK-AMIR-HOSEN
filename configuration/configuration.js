@@ -1,5 +1,6 @@
 require("dotenv").config()
 
+// Project configuration
 const configuration = {
     db: {
         url: process.env.DB_URL 

@@ -9,8 +9,8 @@
 ## Admin credentials 
   - (Please use these credentials for first admin role then you can make an admin of  a normal user from users list)
 
-  -- email: admin@mail.com 
-  -- password: 123456
+  - email: admin@mail.com 
+  - password: 123456
 
   
 

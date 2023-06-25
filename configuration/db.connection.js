@@ -3,6 +3,7 @@ const configuration = require('./configuration')
 
 const dbURL = configuration.db.url
 
+// MongoDB Connection through mongoose
 mongoose.connect(dbURL)
     .then(() => {
         console.log('Mongodb is connected')

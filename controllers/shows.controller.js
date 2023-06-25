@@ -5,7 +5,7 @@ const Users = require('../models/usersModel/user.model')
 const { v4: uuidv4 } = require('uuid')
 
 
-// API endpoint to get all shows 
+// Get all shows 
 const getAllShows = async (req, res) => {
     try {
         const shows = await Shows.find({}, { _id: 0, createdAt: 0, __v: 0 })
@@ -14,12 +14,12 @@ const getAllShows = async (req, res) => {
         res.status(500).send(error.message)
     }
 }
-// API endpoint to post a show 
+
+// POST a new show 
 const createShow = async (req, res) => {
     try {
         const id = uuidv4()
-        const { showName, runtime, director, writer, hero, heroine } = req.body
-
+        const { showName, runtime, director, writer, host, guest } = req.body
 
         const email = req.res.locals.email
         const findEmail = Users.findOne({ email: email })
@@ -32,14 +32,14 @@ const createShow = async (req, res) => {
                 runtime
             })
 
-            // Show director and others crew details post in director collection
+            // Show's director and others crew details post in director collection
             const creatDirectorsDetails = new ShowDirectors({
                 showId: id,
                 director,
                 writer
             })
 
-            // Show Starring/actors details post in starring collection
+            // Show's Starring/actors details post in starring collection
             const creatStarringDetails = new ShowStarrings({
                 showId: id,
                 host,
@@ -54,7 +54,7 @@ const createShow = async (req, res) => {
 
             res.status(201).json({ msg: 'A new show created successfully' })
         } else {
-            res.status(400).json({ msg: 'User not authorized' })
+            res.status(401).json({ msg: 'Unauthorized user' })
         }
 
     } catch (error) {

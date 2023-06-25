@@ -21,7 +21,6 @@ const findASingleMoveiWithCrewDetials = async (req, res) => {
     try {
         let movieFullInfo = []
         const id = req.params?.id
-        // console.log(req.params, id)
 
         // Find data from movies, moviesdirectors and movieStarring collections
         const movie = await Movies.findOne({ id: id }, { _id: 0, createdAt: 0, __v: 0 })
@@ -75,7 +74,7 @@ const createMovie = async (req, res) => {
 
             res.status(201).json({ msg: 'A new movie created successfully' })
         } else {
-            res.status(400).json({ msg: 'User not authorized' })
+            res.status(401).json({ msg: 'Unauthorized user' })
         }
 
 

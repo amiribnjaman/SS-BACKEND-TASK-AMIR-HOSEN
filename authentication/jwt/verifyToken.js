@@ -4,7 +4,6 @@ const configuration = require('../../configuration/configuration')
 // Verify access token function
 const verifyToken = (req, res, next) => {
     const token = req.authorization
-    console.log(req.authorization)
     try {
         jwt.verify(token, configuration.secret_key.key, (err, decoded) => {
             if (decoded) {
@@ -20,7 +19,6 @@ const verifyToken = (req, res, next) => {
 
     }
 
-    return email;
 }
 
 module.exports = { verifyToken }

@@ -13,25 +13,12 @@ const getAllUser = async (req, res) => {
     }
 }
 
-// get a user with role using id
-// const getSingleUserWithRole = async (req, res) => {
-//     try {
-//         const id = req.params.id
-//         // const userRole = []
-//         const user = await Users.findOne({ id: id })
-//         // const role = await Role.findOne({ userId: id })
-//         userRole.push(user, role)
-//         res.status(200).send(userRole)
-//     } catch (error) {
-//         res.status(500).send(error.message)
-//     }
-// }
 
 // Api for create a new user
 const createUser = async (req, res) => {
     try {
         const token = req.res.locals.token
-        // console.log(token)
+        
         const { name, email, password } = req.body
         const id = uuidv4()
         const user = new Users({
@@ -87,7 +74,7 @@ const updateUserRole = async (req, res) => {
             })
             res.status(204).send(updatedRole)
         } else {
-            res.status(400).json({ msg: 'User not authorized' })
+            res.status(401).json({ msg: 'Unauthorized user' })
         }
     } catch (error) {
         res.status(500).send(error.message)
