@@ -41,7 +41,7 @@ const createMovie = async (req, res) => {
         const id = uuidv4()
         const { movieName, runtime, director, producer, writer, hero, heroine } = req.body
 
-        const reqEmail = ''
+        const email = req.res.locals.email
         const findEmail = Users.findOne({ email: email })
         if (findEmail.role == 'admin') {
             // A new movie creating api end point

@@ -3,7 +3,8 @@ const config = require('../../config/config')
 
 // Verify access token function
 const verifyToken = (req, res, next) => {
-    const token = req.cookies.token
+    const token = req.authorization
+    console.log(req)
     try {
         jwt.verify(token, config.secret_key.key, (err, decoded) => {
             if (decoded) {

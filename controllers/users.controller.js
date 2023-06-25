@@ -72,7 +72,7 @@ const signInUser = async (req, res) => {
 // Update user's role from normal user to admin
 const updateUserRole = async (req, res) => {
     try {
-        const reqEmail = ''
+        const email = req.res.locals.email
         const findEmail = Users.findOne({ email: email })
         if (findEmail.role == 'admin') {
             const id = req.params.id

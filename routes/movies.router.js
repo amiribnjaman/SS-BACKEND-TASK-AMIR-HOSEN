@@ -4,7 +4,7 @@ const {
     getAllMovies,
     createMovie,
     findASingleMoveiWithCrewDetials } = require('../controllers/movies.controller')
-const { verifyToken } = require('../authentication/jwt/createToken')
+const { verifyToken } = require('../authentication/jwt/verifyToken')
 
 
 router.get('/', getAllMovies)

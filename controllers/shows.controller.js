@@ -21,7 +21,7 @@ const createShow = async (req, res) => {
         const { showName, runtime, director, writer, hero, heroine } = req.body
 
 
-        const reqEmail = ''
+        const email = req.res.locals.email
         const findEmail = Users.findOne({ email: email })
 
         if (findEmail.role == admin) {
