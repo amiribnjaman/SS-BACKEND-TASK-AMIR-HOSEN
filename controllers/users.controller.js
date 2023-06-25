@@ -56,7 +56,6 @@ const createUser = async (req, res) => {
 // Api for signin or login
 const signInUser = async (req, res) => {
     try {
-        console.log(req.body)
         const token = req.res.locals.token
 
         const { email, password } = req.body
