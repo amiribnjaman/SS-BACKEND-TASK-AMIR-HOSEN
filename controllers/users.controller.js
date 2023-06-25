@@ -56,11 +56,18 @@ const createUser = async (req, res) => {
 // Api for signin or login
 const signInUser = async (req, res) => {
     try {
+        console.log(req.body)
+        const token = req.res.locals.token
+
         const { email, password } = req.body
         const userPass = md5(password)
         const user = await Users.findOne({ email: email })
         if (user && user.password === userPass) {
-            res.status(200).json({ msg: 'User matched' })
+
+            // Set cookie
+            res.cookie("token", token, { httpOnly: false })
+            res.status(200).json({ msg: 'User matched', token: token })
+
         } else {
             res.status(400).send({ msg: 'user doesnt matched' })
         }
