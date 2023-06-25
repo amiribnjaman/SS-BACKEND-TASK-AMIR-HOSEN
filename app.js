@@ -1,7 +1,7 @@
 const express = require('express')
 const cors = require('cors')
 const app = express()
-require('./config/db.connection')
+require('./configuration/db.connection')
 const moviesRouter = require('./routes/movies.router')
 const showsRouter = require('./routes/shows.router')
 const userRouter = require('./routes/users.router')

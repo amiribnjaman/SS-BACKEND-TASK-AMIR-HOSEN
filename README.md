@@ -27,7 +27,7 @@
 - app.js, initial packages, middlwares, routes runs this file
 
 - authentication: In this file, JWT createToke and verify token files stored. 
-- config: this folder holds config.js and db.connection.js files. those files is projects configaration files. 
+- config: this folder holds configuration.js and db.connection.js files. those files is projects configaration files. 
 - config file holds db url and secret key
 - db.connection file holds mongodb database connectoin through mongoose
 

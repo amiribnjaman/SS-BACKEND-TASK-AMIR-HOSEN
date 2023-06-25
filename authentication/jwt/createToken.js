@@ -1,12 +1,12 @@
 const jwt = require('jsonwebtoken')
-const config = require('../../config/config')
+const configuration = require('../../configuration/configuration')
 
 const createToken = async (req, res, next) => {
     const email = req.body.email
     // console.log(email)
-    const token = jwt.sign({email}, config.secret_key.key)
+    const token = jwt.sign({ email }, configuration.secret_key.key)
 
-    res.locals.token = token;  
+    res.locals.token = token;
     next()
 }
 

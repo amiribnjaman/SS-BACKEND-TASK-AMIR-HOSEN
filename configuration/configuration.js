@@ -1,6 +1,6 @@
 require("dotenv").config()
 
-const config = {
+const configuration = {
     db: {
         url: process.env.DB_URL 
     },
@@ -9,4 +9,4 @@ const config = {
     }
 }
 
-module.exports = config
+module.exports = configuration

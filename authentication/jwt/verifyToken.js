@@ -1,12 +1,12 @@
 const jwt = require('jsonwebtoken')
-const config = require('../../config/config')
+const configuration = require('../../configuration/configuration')
 
 // Verify access token function
 const verifyToken = (req, res, next) => {
     const token = req.authorization
     console.log(req.authorization)
     try {
-        jwt.verify(token, config.secret_key.key, (err, decoded) => {
+        jwt.verify(token, configuration.secret_key.key, (err, decoded) => {
             if (decoded) {
                 res.locals.email = { email: decoded.email, statusCode: 200 }
                 next()

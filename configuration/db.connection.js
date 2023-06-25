@@ -1,7 +1,7 @@
 const mongoose = require('mongoose')
-const config = require('./config')
+const configuration = require('./configuration')
 
-const dbURL = config.db.url
+const dbURL = configuration.db.url
 
 mongoose.connect(dbURL)
     .then(() => {
